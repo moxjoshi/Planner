@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content, maximum-scale=1.0, user-scalable=no">
+    <title>GhostPlan - Organize you day</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="another logo.png">
+    <link rel="apple-touch-icon" href="another logo.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+</head>
+
+<body>
+    <main class="app-container">
+        <!-- Onboarding View -->
+        <div id="onboarding-view" class="view" style="display: none;">
+            <div class="onboarding-container">
+                <!-- Step 1: Welcome -->
+                <div class="onboarding-step active" id="step-1">
+                    <img src="another logo for welcome screen.png" alt="GhostPlan Logo" class="onboarding-logo">
+                    <h1>Welcome to GhostPlan</h1>
+                    <p>Boost your Productivity by organizing your day</p>
+                    <button class="primary-btn onboarding-btn" onclick="nextOnboardingStep(2)">
+                        Next <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Step 2: Important Info -->
+                <div class="onboarding-step" id="step-2">
+                    <h1>Important Message</h1>
+                    <ul class="onboarding-list">
+                        <li><i class="fa-solid fa-check"></i> Add this to your homescreen to get all benefits</li>
+                        <li><i class="fa-solid fa-shield-halved"></i> You are not tracked</li>
+                        <li><i class="fa-solid fa-database"></i> Your data doesn't go anywhere</li>
+                        <li><i class="fa-solid fa-trash-can"></i> Once you delete the tasks, you can't undo them</li>
+                    </ul>
+                    <button class="primary-btn onboarding-btn" onclick="nextOnboardingStep(3)">
+                        Next <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Step 3: Contact & Start -->
+                <div class="onboarding-step" id="step-3">
+                    <h1>For feedback and bugs fixes</h1>
+                    <p>Send a mail to this Gmail account</p>
+                    <a href="mailto:Mokshjoshi377@gmail.com" class="contact-link">
+                        Mokshjoshi377@gmail.com <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <div style="flex-grow: 1;"></div>
+                    <button class="primary-btn onboarding-btn large" onclick="finishOnboarding()">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="home-view" class="view">
+            <header>
+                <div class="header-top">
+                    <img src="another logo transparent.png" alt="GhostPlan Logo" class="app-logo">
+                    <h1>GhostPlan</h1>
+                    <div style="position: relative;">
+                        <button class="icon-btn" id="more-options-btn" aria-label="More options">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="1" />
+                                <circle cx="19" cy="12" r="1" />
+                                <circle cx="5" cy="12" r="1" />
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" id="header-dropdown">
+
+                            <button id="clear-tasks-btn" class="dropdown-item danger">
+                                <i class="fa-solid fa-trash"></i> Clear all tasks
+                            </button>
+                            <a href="mailto:mokshjoshi377@gmail.com" class="dropdown-item">
+                                <i class="fa-solid fa-envelope"></i> Reach developer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-bottom">
+                    <div class="date-display">
+                        <span id="current-month">March 2023</span>
+                    </div>
+                    <button id="create-task-btn" class="create-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Create new task
+                    </button>
+                </div>
+            </header>
+
+            <div class="date-scroller" id="date-scroller">
+            </div>
+
+            <section class="task-summary" id="task-summary-card">
+                <div class="summary-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <div class="summary-text">
+                    <h2 id="summary-title">Today's Task</h2>
+                    <p id="summary-subtitle">0 Task</p>
+                </div>
+            </section>
+
+            <div class="timeline" id="timeline">
+            </div>
+        </div>
+
+        <div id="profile-view" class="view">
+            <header>
+                <div class="header-top">
+                    <button class="icon-btn" id="back-to-home-btn" aria-label="Go back">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <h1>Edit Profile</h1>
+                    <div style="width: 44px;"></div>
+                </div>
+            </header>
+
+        </div>
+        </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="bottom-sheet" id="bottom-sheet">
+            <div class="sheet-header">
+                <button id="cancel-btn" class="icon-btn-text text-danger">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 id="sheet-title">New Task</h2>
+                <button id="save-btn" class="icon-btn-text text-success">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+            </div>
+
+            <div class="sheet-body">
+                <div class="form-group">
+                    <label for="task-name">Task Name</label>
+                    <input type="text" id="task-name" placeholder="What keeps you dragging?" autocomplete="off">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-date">Date</label>
+                        <input type="date" id="task-date">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-start-time">Start Time</label>
+                            <input type="time" id="task-start-time">
+                        </div>
+                        <div class="form-group">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <label for="task-end-time" style="margin-bottom: 0;">End Time</label>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <input type="checkbox" id="has-end-time"
+                                        style="width: 16px; height: 16px; margin: 0; cursor: pointer; accent-color: var(--primary-color);">
+                                </div>
+                            </div>
+                            <input type="time" id="task-end-time" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Color</label>
+                    <div class="color-options" id="color-options">
+                    </div>
+                </div>
+
+                <div class="recurring-section">
+                    <div class="recurring-header">
+                        <span class="recurring-label">
+                            <i class="fa-solid fa-repeat"></i> Repeat Task
+                        </span>
+                        <label class="switch">
+                            <input type="checkbox" id="recurring-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="day-selector" id="day-selector" style="display: none;">
+                        <p class="section-hint">Select days to repeat:</p>
+                        <div class="days-container">
+                            <button class="day-pill" data-day="sun">S</button>
+                            <button class="day-pill" data-day="mon">M</button>
+                            <button class="day-pill" data-day="tue">T</button>
+                            <button class="day-pill" data-day="wed">W</button>
+                            <button class="day-pill" data-day="thu">T</button>
+                            <button class="day-pill" data-day="fri">F</button>
+                            <button class="day-pill" data-day="sat">S</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="delete-btn" class="delete-link" style="display: none;">
+                    <i class="fa-solid fa-trash"></i> Delete Task
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-check-circle"></i>
+        <span id="toast-message">Action Completed</span>
+    </div>
+
+    <div id="notification-banner" class="notification-banner">
+        <div class="banner-content">
+            <div class="banner-icon">
+                <img src="another logo.png" alt="Logo">
+            </div>
+            <div class="banner-text">
+                <h4 id="banner-title">Task Starting</h4>
+                <p id="banner-message">Your task is starting now</p>
+            </div>
+        </div>
+        <button id="banner-close" class="banner-close">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>
