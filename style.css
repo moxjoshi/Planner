@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #050509;
+    --bg-color: #000000;
     --card-bg: #141418;
     --card-bg-hover: #1c1c24;
     --text-primary: #f5f5f5;
@@ -1077,4 +1077,5 @@ input:checked+.slider:before {
 .banner-close:hover {
     background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
+
 }
